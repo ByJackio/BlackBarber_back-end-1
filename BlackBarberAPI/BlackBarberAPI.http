@@ -1,0 +1,6 @@
+@BlackBarberAPI_HostAddress = http://localhost:5064
+
+GET {{BlackBarberAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BlackBarberAPI/BlackBarberAPI.csproj" />
+  <Project Path="ClassLibrary1/ClassLibrary1.csproj" />
+</Solution>
