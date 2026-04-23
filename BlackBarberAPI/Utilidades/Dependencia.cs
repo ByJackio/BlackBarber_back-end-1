@@ -33,6 +33,7 @@ namespace BlackBarberAPI.Utilidades
 
             services.AddScoped(typeof(UsuarioProceso));
             services.AddScoped(typeof(PasswordEncrtyption));
+            services.AddScoped(typeof(BarberoProceso));
 
             #endregion
 
