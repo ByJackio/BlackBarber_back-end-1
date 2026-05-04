@@ -111,6 +111,16 @@ namespace BlackBarberAPI.Process
                     {
                         throw new Exception("No se pudo crear la cita.");
                     }
+                    foreach(var detalle in servicio.detalles)
+                    {
+                        DetalleCitaDTO det = detalle;
+                        det.IdServicioCita = citaCreada.Id;
+                        var detalleCitaCreado = await _detalleCitaService.CrearYObtener(det);
+                        if(detalleCitaCreado.Id <= 0)
+                        {
+                            throw new Exception("Ocurrió un error al intentar guardar un detalle.");
+                        }
+                    }
                 }
                 await transaccion.CommitAsync();
                 respuesta.Estatus = true;
@@ -188,6 +198,7 @@ namespace BlackBarberAPI.Process
             var usuario = await _usuarioService.ObtenerXId(idUsuario);
             foreach (var cita in citas)
             {
+                decimal totalDetalles = 0;
                 var citaDetallada = new CitaDetalladaDTO
                 {
                     Id = cita.Id,
@@ -213,9 +224,11 @@ namespace BlackBarberAPI.Process
                         NombreBarbero = barberoRelacionado.Nombre,
                         NombreServicio = servicioObjeto != null ? servicioObjeto.Nombre : "Servicio no encontrado"
                     };
+                    var detalles = await _detalleCitaService.ObtenerXPerteneciente(servicio.Id);
+                    totalDetalles += detalles.Sum(d => d.Precio);
                     citaDetallada.Servicios.Add(servicioDetallado);
                 }
-                citaDetallada.Total = citaDetallada.Servicios.Sum(s => s.Precio);
+                citaDetallada.Total = citaDetallada.Servicios.Sum(s => s.Precio)+totalDetalles;
                 listado.Add(citaDetallada);
             }
             return listado;
@@ -235,6 +248,7 @@ namespace BlackBarberAPI.Process
             //var barbero = await _barberoService.ObtenerXId(idBarbero);
             foreach (var cita in citas)
             {
+                decimal totalDetalles = 0;
                 var cliente = await _usuarioService.ObtenerXId((int)cita.IdCliente);
                 var citaDetallada = new CitaDetalladaDTO
                 {
@@ -260,9 +274,11 @@ namespace BlackBarberAPI.Process
                         NombreBarbero = barbero.Nombre,
                         NombreServicio = servicioObjeto != null ? servicioObjeto.Nombre : "Servicio no encontrado"
                     };
+                    var detalles = await _detalleCitaService.ObtenerXPerteneciente(servicio.Id);
+                    totalDetalles += detalles.Sum(d => d.Precio);
                     citaDetallada.Servicios.Add(servicioDetallado);
                 }
-                citaDetallada.Total = citaDetallada.Servicios.Sum(s => s.Precio);
+                citaDetallada.Total = citaDetallada.Servicios.Sum(s => s.Precio) + totalDetalles;
                 listado.Add(citaDetallada);
             }
             return listado;

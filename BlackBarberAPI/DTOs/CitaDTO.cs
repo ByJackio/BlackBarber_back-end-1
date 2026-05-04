@@ -10,12 +10,12 @@
 
         public int? IdCliente { get; set; }
 
-        public int? Estatus { get; set; }
+        public int? Estatus { get; set; } //1: Creada   2: Finalizada   3: Cancelada
     }
 
     public class CitaCreacionDTO : CitaDTO
     {
-        public List<ServicioCitaDTO> Servicios { get; set; } = new List<ServicioCitaDTO>();
+        public List<ServicioCitaConDetallesDTO> Servicios { get; set; } = new List<ServicioCitaConDetallesDTO>();
     }
 
     public class CitaDetalladaDTO : CitaDTO

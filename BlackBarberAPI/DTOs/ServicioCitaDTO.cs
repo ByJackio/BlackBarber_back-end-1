@@ -18,4 +18,9 @@
         public string NombreBarbero { get; set; }
         public string NombreServicio { get; set; }
     }
+
+    public class ServicioCitaConDetallesDTO : ServicioCitaDTO
+    {
+        public List<DetalleCitaDTO> detalles { get; set; } = new List<DetalleCitaDTO>();
+    }
 }
