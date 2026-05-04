@@ -13,7 +13,7 @@ public partial class Citum
 
     public int? IdCliente { get; set; }
 
-    public int? Estatus { get; set; }
+    public int? Estatus { get; set; } //1: Creada   2: Finalizada   3: Cancelada
 
     public virtual Usuario? IdClienteNavigation { get; set; }
 

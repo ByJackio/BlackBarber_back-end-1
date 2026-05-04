@@ -20,18 +20,11 @@ namespace BlackBarberAPI.Services
 
         public async Task<PreferenciasClienteDTO> ObtenerXId(int id) => _mapper.Map<PreferenciasClienteDTO>(await _repository.Obtener(p => p.Id == id));
 
-        public async Task<List<PreferenciasClienteDTO>> ObtenerXCliente(int idCliente)
-        {
-            var lista = await _repository.ObtenerTodos(p => p.IdCliente == idCliente);
-            return _mapper.Map<List<PreferenciasClienteDTO>>(lista);
-        }
-
-        public async Task<PreferenciasClienteDTO> CrearYEditar(PreferenciasClienteDTO objeto)
+        public async Task<PreferenciasClienteDTO> CrearYObtener(PreferenciasClienteDTO objeto)
         {
             var modelo = _mapper.Map<PreferenciasCliente>(objeto);
-            if (modelo.Id != 0) await _repository.Editar(modelo);
-            else await _repository.Crear(modelo);
-            return _mapper.Map<PreferenciasClienteDTO>(modelo);
+            var respuesta = await _repository.Crear(modelo);
+            return _mapper.Map<PreferenciasClienteDTO>(respuesta);
         }
 
         public async Task<RespuestaDTO> Editar(PreferenciasClienteDTO objeto)
@@ -71,6 +64,12 @@ namespace BlackBarberAPI.Services
             respuesta.Descripcion = respuesta.Estatus ? "Preferencia eliminada" : "Error al intentar eliminar";
 
             return respuesta;
+        }
+
+        public async Task<PreferenciasClienteDTO> ObtenerXIdUsuario(int idUsuario)
+        {
+            var respuesta = await _repository.Obtener(p=>p.IdCliente == idUsuario);
+            return _mapper.Map<PreferenciasClienteDTO>(respuesta);
         }
     }
 }

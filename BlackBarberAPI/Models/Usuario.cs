@@ -15,7 +15,7 @@ public partial class Usuario
 
     public byte[] HoraCreacion { get; set; } = null!;
 
-    public int? Estatus { get; set; }
+    public int? Estatus { get; set; } //1: Activo   2: Inactivo
 
     public int? IdRol { get; set; }
 

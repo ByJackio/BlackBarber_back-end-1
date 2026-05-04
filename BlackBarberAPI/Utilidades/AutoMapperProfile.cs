@@ -37,6 +37,13 @@ namespace BlackBarberAPI.Utilidades
 
             #endregion
 
+            #region Resena
+
+            CreateMap<Resena, ResenaDTO>();
+            CreateMap<ResenaDTO, Resena>();
+
+            #endregion
+
             #region Cita
 
             CreateMap<Citum, CitaDTO>();
@@ -90,6 +97,13 @@ namespace BlackBarberAPI.Utilidades
 
             CreateMap<DiasHabiles, DiasHabilDTO>();
             CreateMap<DiasHabilDTO, DiasHabiles>();
+
+            #endregion
+
+            #region PreferenciasCliente
+
+            CreateMap<PreferenciasCliente, PreferenciasClienteDTO>();
+            CreateMap<PreferenciasClienteDTO, PreferenciasCliente>();
 
             #endregion
 

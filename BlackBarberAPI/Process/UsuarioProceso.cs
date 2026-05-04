@@ -94,7 +94,7 @@ namespace BlackBarberAPI.Process
             if(usuarioActual == null || usuarioActual.Id <= 0)
             {
                 respuesta.Estatus = false;
-                respuesta.Descripcion = "No se encontró el usuario";
+                respuesta.Descripcion = "No se encontró el usuario.";
                 return respuesta;
             }
             if (usuarioActual.Username != usuario.Username)
@@ -103,7 +103,7 @@ namespace BlackBarberAPI.Process
                 if(usuariosExistentes.Where(u=>u.Id!=usuario.Id && u.Username == usuario.Username).ToList().Count() > 0)
                 {
                     respuesta.Estatus = false;
-                    respuesta.Descripcion = "Ya existe un usuario con ese nombre de usuario";
+                    respuesta.Descripcion = "Ya existe un usuario con ese nombre de usuario.";
                     return respuesta;
                 }
             }
