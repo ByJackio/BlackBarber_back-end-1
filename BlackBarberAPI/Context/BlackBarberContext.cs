@@ -192,6 +192,7 @@ public partial class BlackBarberContext : DbContext
 
             entity.Property(e => e.Descripcion).HasMaxLength(150);
             entity.Property(e => e.Estatus).HasDefaultValue(1);
+            entity.Property(e => e.Horas).HasDefaultValue(0);
             entity.Property(e => e.Nombre).HasMaxLength(80);
             entity.Property(e => e.PrecioBase).HasColumnType("decimal(10, 2)");
 
