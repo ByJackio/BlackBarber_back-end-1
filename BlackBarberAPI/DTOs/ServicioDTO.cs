@@ -12,6 +12,8 @@
 
         public decimal PrecioBase { get; set; }
 
+        public int Horas { get; set; }
+
         public string? Base64 { get; set; }
 
         public int? Estatus { get; set; }

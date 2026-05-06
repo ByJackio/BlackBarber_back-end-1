@@ -49,6 +49,7 @@ namespace BlackBarberAPI.Services
             objetoEncontrado.IdTipo = objeto.IdTipo;
             objetoEncontrado.PrecioBase = objeto.PrecioBase;
             objetoEncontrado.Estatus = objeto.Estatus;
+            objetoEncontrado.Horas = objeto.Horas;
 
             bool actualizado = await _repository.Editar(objetoEncontrado);
             return new RespuestaDTO { Estatus = actualizado, Descripcion = actualizado ? "Servicio actualizado" : "Error" };

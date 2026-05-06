@@ -19,6 +19,8 @@ public partial class Servicio
 
     public int? Estatus { get; set; }
 
+    public int Horas { get; set; }
+
     public virtual ICollection<AnadidoServicio> AnadidoServicios { get; set; } = new List<AnadidoServicio>();
 
     public virtual ICollection<BarberoServicio> BarberoServicios { get; set; } = new List<BarberoServicio>();
