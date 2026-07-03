@@ -54,5 +54,11 @@ namespace BlackBarberAPI.Services
             var lista = await _repository.ObtenerTodos();
             return _mapper.Map<List<BarberoServicioDTO>>(lista);
         }
+
+        public async Task<List<BarberoServicioDTO>> ObtenerXIdServicio(int IdServicio)
+        {
+            var lista = await _repository.ObtenerTodos(bs => bs.IdServicio == IdServicio);
+            return _mapper.Map<List<BarberoServicioDTO>>(lista);
+        }
     }
 }

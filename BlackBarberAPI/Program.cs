@@ -18,6 +18,7 @@ builder.Services.AddDbContext<BlackBarberContext>(options =>
 builder.Services.InyectarDependencias(builder.Configuration);
 
 //Configura los CORS y otros servicios
+// 1. REGISTRO DEL SERVICIO (Donde se configuran los orígenes)
 var origenesConfig = builder.Configuration["OrigenesPermitidos"];
 if (string.IsNullOrEmpty(origenesConfig))
     throw new InvalidOperationException("Falta 'OrigenesPermitidos' en configuración.");
@@ -26,25 +27,12 @@ var origenesPermitidos = origenesConfig.Split(",", StringSplitOptions.RemoveEmpt
 
 builder.Services.AddCors(zOptions =>
 {
-    if (origenesPermitidos != null && origenesPermitidos.Length > 0)
+    zOptions.AddPolicy("AllowReactApp", policy =>
     {
-        zOptions.AddDefaultPolicy(builder =>
-        {
-            builder.WithOrigins(origenesPermitidos)
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-    }
-    else
-    {
-        // Configuración de CORS por defecto si no hay AllowedHosts configurados
-        zOptions.AddDefaultPolicy(builder =>
-        {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
-        });
-    }
+        policy.WithOrigins(origenesPermitidos)
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
@@ -61,7 +49,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors("AllowReactApp");
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

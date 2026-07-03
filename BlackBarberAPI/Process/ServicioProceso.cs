@@ -9,12 +9,16 @@ namespace BlackBarberAPI.Process
         private readonly IServicioService<BlackBarberContext> _servicioService;
         private readonly IAnadidoServicioService<BlackBarberContext> _anadidoServicioService;
         private readonly IServicioCitaService<BlackBarberContext> _servicioCitaService;
+        private readonly IBarberoServicioService<BlackBarberContext> _barberoServicioService;
+        private readonly BlackBarberContext _db;
 
-        public ServicioProceso(IServicioService<BlackBarberContext> servicioService, IAnadidoServicioService<BlackBarberContext> anadidoServicioService, IServicioCitaService<BlackBarberContext> servicioCitaService)
+        public ServicioProceso(IServicioService<BlackBarberContext> servicioService, IAnadidoServicioService<BlackBarberContext> anadidoServicioService, IServicioCitaService<BlackBarberContext> servicioCitaService, IBarberoServicioService<BlackBarberContext> barberoServicioService, BlackBarberContext db)
         {
             _servicioService = servicioService;
             _anadidoServicioService = anadidoServicioService;
             _servicioCitaService = servicioCitaService;
+            _barberoServicioService = barberoServicioService;
+            _db = db;
         }
 
         public async Task<List<ServicioDTO>> ObtenerTodosServicios()
@@ -54,6 +58,7 @@ namespace BlackBarberAPI.Process
                 Descripcion = objeto.Descripcion,
                 IdTipo = objeto.IdTipo,
                 PrecioBase = objeto.PrecioBase,
+                Horas = objeto.Horas,
                 Estatus = objeto.Estatus
             };
             if (objeto.Archivo != null)
@@ -66,7 +71,6 @@ namespace BlackBarberAPI.Process
 
         public async Task<RespuestaDTO> EliminarServicio(int id)
         {
-            var anadidosServicio = await _anadidoServicioService.ObtenerXPerteneciente(id);
             var relacionServicio = await _servicioCitaService.ObtenerXIdServicio(id);
             if(relacionServicio.Count() > 0)
             {
@@ -76,12 +80,42 @@ namespace BlackBarberAPI.Process
                     Descripcion = "No se puede eliminar el servicio cuando ya hay citas que lo consumen"
                 };
             }
-            foreach (var anadido in anadidosServicio)
+            var anadidosServicio = await _anadidoServicioService.ObtenerXPerteneciente(id);
+            var barberoServicio = await _barberoServicioService.ObtenerXIdServicio(id);
+            await using var transaction = await _db.Database.BeginTransactionAsync();
+            try
             {
-                await _anadidoServicioService.Eliminar(anadido.Id);
+                foreach (var relacion in barberoServicio)
+                {
+                    var relEl = await _barberoServicioService.Eliminar(relacion.Id);
+                    if (!relEl.Estatus)
+                    {
+                        throw new Exception("Ocurrió un problema al intentar remover la asignación.");
+                    }
+                }
+                foreach (var anadido in anadidosServicio)
+                {
+                    var anEl = await _anadidoServicioService.Eliminar(anadido.Id);
+                    if (!anEl.Estatus)
+                    {
+                        throw new Exception("Ocurrió un problema al intentar eliminar los añadidos.");
+                    }
+                }
+                var respuesta = await _servicioService.Eliminar(id);
+                await transaction.CommitAsync();
+                return respuesta;
             }
-            var respuesta = await _servicioService.Eliminar(id);
-            return respuesta;
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                RespuestaDTO resp = new RespuestaDTO
+                {
+                    Estatus = false,
+                    Descripcion = ex.Message
+                };
+                return resp;
+            }
+            
         }
 
         public async Task<List<AnadidoServicioDTO>> ObtenerAnadidosXPerteneciente(int idServicio)
