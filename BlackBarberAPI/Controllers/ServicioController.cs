@@ -33,13 +33,13 @@ namespace BlackBarberAPI.Controllers
             return await _servicioProceso.CrearServicio(objeto);
         }
 
-        [HttpPost("editarServicio")]
+        [HttpPut("editarServicio")]
         public async Task<ActionResult<RespuestaDTO>> EditarServicio([FromBody] ServicioConArchivoDTO objeto)
         {
             return await _servicioProceso.EditarServicio(objeto);
         }
 
-        [HttpGet("eliminarServicio/{id:int}")]
+        [HttpDelete("eliminarServicio/{id:int}")]
         public async Task<ActionResult<RespuestaDTO>> EliminarServicio(int id)
         {
             return await _servicioProceso.EliminarServicio(id);
@@ -51,13 +51,13 @@ namespace BlackBarberAPI.Controllers
             return await _servicioProceso.CrearAnadidoServicio(objeto);
         }
 
-        [HttpPost("editarAnadidoServicio")]
+        [HttpPut("editarAnadidoServicio")]
         public async Task<ActionResult<RespuestaDTO>> EditarAnadidoServicio([FromBody] AnadidoServicioDTO objeto)
         {
             return await _servicioProceso.EditarAnadidoServicio(objeto);
         }
 
-        [HttpGet("eliminarAnadidoServicio/{id:int}")]
+        [HttpDelete("eliminarAnadidoServicio/{id:int}")]
         public async Task<ActionResult<RespuestaDTO>> EliminarAnadidoServicio(int id)
         {
             return await _servicioProceso.EliminarAnadidoServicio(id);

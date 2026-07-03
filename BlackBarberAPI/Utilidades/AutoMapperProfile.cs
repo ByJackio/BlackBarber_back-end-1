@@ -27,6 +27,11 @@ namespace BlackBarberAPI.Utilidades
                 .ForMember(destino => destino.IdUsuarioNavigation, opt => opt.Ignore())
                 .ForMember(destino => destino.BarberoServicios, opt => opt.Ignore());
 
+            CreateMap<BarberoServicio, BarberoServicioDTO>();
+            CreateMap<BarberoServicioDTO, BarberoServicio>()
+                .ForMember(destino => destino.IdBarberoNavigation, opt => opt.Ignore())
+                .ForMember(destino => destino.IdServicioNavigation, opt => opt.Ignore());
+
             #endregion
 
             #region Rol
@@ -83,6 +88,10 @@ namespace BlackBarberAPI.Utilidades
                 .ForMember(destino => destino.IdBarberoNavigation, opt => opt.Ignore())
                 .ForMember(destino => destino.IdCitaNavigation, opt => opt.Ignore())
                 .ForMember(destino => destino.DetalleCita, opt => opt.Ignore());
+
+            CreateMap<AnadidoServicio, AnadidoServicioDTO>();
+            CreateMap<AnadidoServicioDTO, AnadidoServicio>()
+                .ForMember(destino => destino.IdPertenecienteNavigation, opt => opt.Ignore());
 
             #endregion
 

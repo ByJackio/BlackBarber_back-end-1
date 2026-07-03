@@ -6,6 +6,7 @@ namespace BlackBarberAPI.Services.Contratos
     public interface IBarberoServicioService<T> where T : DbContext
     {
         Task<List<BarberoServicioDTO>> ObtenerTodos();
+        Task<List<BarberoServicioDTO>> ObtenerXIdServicio(int IdServicio);
         Task<BarberoServicioDTO> ObtenerXId(int id);
         Task<BarberoServicioDTO> CrearYObtener(BarberoServicioDTO objeto);
         Task<RespuestaDTO> Eliminar(int id);

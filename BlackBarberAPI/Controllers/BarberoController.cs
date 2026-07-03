@@ -29,14 +29,14 @@ namespace BlackBarberAPI.Controllers
             return respuesta;
         }
 
-        [HttpPost("editarBarbero")]
+        [HttpPut("editarBarbero")]
         public async Task<ActionResult<RespuestaDTO>> EditarBarbero([FromBody] BarberoDTO barbero)
         {
             var respuesta = await _proceso.EditarBarbero(barbero);
             return respuesta;
         }
 
-        [HttpGet("eliminarBarbero/{id:int}")]
+        [HttpDelete("eliminarBarbero/{id:int}")]
         public async Task<ActionResult<RespuestaDTO>> EliminarBarbero(int id)
         {
             var respuesta = await _proceso.EliminarBarbero(id);
