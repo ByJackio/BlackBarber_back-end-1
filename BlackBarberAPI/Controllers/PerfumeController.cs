@@ -31,14 +31,14 @@ namespace BlackBarberAPI.Controllers
             return respuesta;
         }
 
-        [HttpPost("editarPerfume")]
+        [HttpPut("editarPerfume")]
         public async Task<ActionResult<RespuestaDTO>> EditarPerfume([FromBody] PerfumeConArchivoDTO objeto)
         {
             var respuesta = await _perfumeProceso.EditarPerfume(objeto);
             return respuesta;
         }
 
-        [HttpGet("eliminarPerfume/{id:int}")]
+        [HttpDelete("eliminarPerfume/{id:int}")]
         public async Task<ActionResult<RespuestaDTO>> EliminarPerfume(int id)
         {
             var respuesta = await _perfumeProceso.EliminarPerfume(id);

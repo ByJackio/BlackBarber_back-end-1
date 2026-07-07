@@ -36,14 +36,14 @@ namespace BlackBarberAPI.Controllers
             return respuesta;
         }
 
-        [HttpPost("editarPromocion")]
+        [HttpPut("editarPromocion")]
         public async Task<ActionResult<RespuestaDTO>> EditarPromocion([FromBody] PromocionDTO promocion)
         {
             var respuesta = await _promocionProceso.EditarPromocion(promocion);
             return respuesta;
         }
 
-        [HttpGet("eliminarPromocion/{id:int}")]
+        [HttpDelete("eliminarPromocion/{id:int}")]
         public async Task<ActionResult<RespuestaDTO>> EliminarPromocion(int id)
         {
             var respuesta = await _promocionProceso.EliminarPromocion(id);
