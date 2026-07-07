@@ -28,7 +28,8 @@ namespace BlackBarberAPI.Process
             {
                 Nombre = objeto.Nombre,
                 Descripcion = objeto.Descripcion,
-                Disponible = objeto.Disponible
+                Disponible = objeto.Disponible,
+                Base64 = objeto.Base64
             };
             if (objeto.Archivo != null)
             {
@@ -50,7 +51,8 @@ namespace BlackBarberAPI.Process
                 Id = objeto.Id,
                 Nombre = objeto.Nombre,
                 Descripcion = objeto.Descripcion,
-                Disponible = objeto.Disponible
+                Disponible = objeto.Disponible,
+                Base64 = objeto.Base64
             };
             if (objeto.Archivo != null)
             {
