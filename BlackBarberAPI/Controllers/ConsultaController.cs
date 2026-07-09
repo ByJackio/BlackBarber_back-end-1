@@ -33,7 +33,7 @@ namespace BlackBarberAPI.Controllers
             return respuesta;
         }
 
-        [HttpPost("editarConsulta")]
+        [HttpPut("editarConsulta")]
         public async Task<ActionResult<RespuestaDTO>> EditarConsulta(ConsultaDTO consultaDTO)
         {
             var resultado = await _service.EditarConsulta(consultaDTO);

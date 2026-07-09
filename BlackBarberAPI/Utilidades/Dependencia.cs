@@ -44,6 +44,7 @@ namespace BlackBarberAPI.Utilidades
             services.AddScoped(typeof(ServicioProceso));
             services.AddScoped(typeof(UsuarioProceso));
             services.AddScoped(typeof(PreferenciasClienteProceso));
+            services.AddScoped(typeof(DiaSHabilesProceso));
 
             #endregion
 

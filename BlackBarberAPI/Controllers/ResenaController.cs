@@ -16,35 +16,35 @@ namespace BlackBarberAPI.Controllers
             _resenaService = resenaService;
         }
 
-        [HttpGet("ObtenerResenas")]
+        [HttpGet("obtenerResenas")]
         public async Task<ActionResult<List<ResenaDTO>>> ObtenerTodas()
         {
             var lista = await _resenaService.ObtenerTodos();
             return lista;
         }
 
-        [HttpGet("ObtenerXCita/{idCita:int}")]
+        [HttpGet("obtenerXCita/{idCita:int}")]
         public async Task<ActionResult<List<ResenaDTO>>> ObtenerXIdCita(int idCita)
         {
             var lista = await _resenaService.ObtenerXPerteneciente(idCita);
             return lista;
         }
 
-        [HttpPost("Crear")]
+        [HttpPost("crear")]
         public async Task<ActionResult<ResenaDTO>> CrearResena(ResenaDTO resena)
         {
             var respuesta = await _resenaService.CrearYObtener(resena);
             return respuesta;
         }
 
-        [HttpPost("Editar")]
+        [HttpPut("editar")]
         public async Task<ActionResult<RespuestaDTO>> EditarResena(ResenaDTO resena)
         {
             var respuesta = await _resenaService.Editar(resena);
             return respuesta;
         }
 
-        [HttpPost("Eliminar")]
+        [HttpDelete("eliminar")]
         public async Task<ActionResult<RespuestaDTO>> Eliminar(int id)
         {
             var respuesta = await _resenaService.Eliminar(id);

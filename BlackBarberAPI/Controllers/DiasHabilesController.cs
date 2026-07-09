@@ -22,7 +22,7 @@ namespace BlackBarberAPI.Controllers
             return lista;
         }
 
-        [HttpPost("editar")]
+        [HttpPut("editar")]
         public async Task<ActionResult<RespuestaDTO>> Editar(DiasHabilDTO objeto)
         {
             var resultado = await _proceso.EditarDiaHabil(objeto);

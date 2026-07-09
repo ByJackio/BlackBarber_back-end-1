@@ -22,7 +22,7 @@ namespace BlackBarberAPI.Controllers
             return respuesta;
         }
 
-        [HttpGet("obtenerXUsuario")]
+        [HttpGet("obtenerXUsuario/{id:int}")]
         public async Task<ActionResult<PreferenciasClienteDTO>> ObtenerXUsuario(int id)
         {
             var respuesta = await _proceso.ObtenerPreferenciaCliente(id);
